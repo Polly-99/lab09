@@ -31,7 +31,7 @@ $ git config -e --global
 $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab03 #добавляем удалённый репозиторий
 $ touch README.md #создаем пустой файл README.md
 $ git status #смотрим состояние проекта, измененные и не добавленные файлы
-$ git add README.md #добавляет README.md в индекс (staging area) для последующего коммита
+$ git add README.md #добавляет README.md в индекс для последующего коммита
 $ git commit -m"added README.md" #совершение коммита
 $ git push origin master #вносим созданные изменения в удаленный репозиторий
 ```
