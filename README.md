@@ -129,6 +129,19 @@ $ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
 $ cmake --build _build --target install
 $ tree _install #отображение проекта в виде дерева
 ```
+Вывод из стандартного потока вывода для команды tree _install
+```
+_install
+├── cmake
+│   ├── print-config.cmake
+│   └── print-config-noconfig.cmake
+├── include
+│   └── print.hpp
+└── lib
+    └── libprint.a
+
+3 directories, 4 files
+
 Коммит изменений
 ```ShellSession
 $ git add CMakeLists.txt
