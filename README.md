@@ -79,15 +79,13 @@ $ cat >> CMakeLists.txt <<EOF
 include_directories(\${CMAKE_CURRENT_SOURCE_DIR}/include)
 EOF
 ```
-
-```ShellSession
 Запуск сборки cmake
+```ShellSession
 $ cmake -H. -B_build
 $ cmake --build _build
 ```
-
-```ShellSession
 Редактирование CMakeLists.txt
+```ShellSession
 $ cat >> CMakeLists.txt <<EOF
 
 add_executable(example1 \${CMAKE_CURRENT_SOURCE_DIR}/examples/example1.cpp)
