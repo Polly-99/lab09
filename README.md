@@ -39,7 +39,7 @@ EOF
 
 Создание CMakeLists.txt
 ```ShellSession
-$ sed -i '/option(BUILD_EXAMPLES "Build examples" OFF)/a\ #дописываем строку в потоковом текстовом редакторе
+$ sed -i '/option(BUILD_EXAMPLES "Build examples" OFF)/a\ #добавляем строку в потоковом текстовом редакторе
 option(BUILD_TESTS "Build tests" OFF)
 ' CMakeLists.txt
 $ cat >> CMakeLists.txt <<EOF # редактирование файла CMakeLists.txt
@@ -86,7 +86,7 @@ $ cmake --build _build --target test
 ```ShellSession
 $ sed -i 's/lab05/lab06/g' README.md # замена "lab05" на "lab06"
 $ sed -i 's/\(DCMAKE_INSTALL_PREFIX=_install\)/\1 -DBUILD_TESTS=ON/' .travis.yml # дописывание строки
-$ sed -i '/cmake --build _build --target install/a\ #добавление строки
+$ sed -i '/cmake --build _build --target install/a\ #добавление строки после данной
 - cmake --build _build --target test
 ' .travis.yml
 ```
