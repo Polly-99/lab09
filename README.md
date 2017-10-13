@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Polly-99/lab05.svg?branch=master)](https://travis-ci.org/Polly-99/lab05)
+[![Build Status](https://travis-ci.org/Polly-99/lab06.svg?branch=master)](https://travis-ci.org/Polly-99/lab06)
 ## Laboratory work V
 
 Данная лабораторная работа посвещена изучению систем непрерывной интеграции на примере сервиса **Travis CI**
@@ -10,7 +10,7 @@ $ open https://travis-ci.org
 ## Tasks
 
 - [x] 1. Авторизоваться на сервисе **Travis CI** с использованием **GitHub** аккаунта
-- [x] 2. Создать публичный репозиторий с названием **lab05** на сервисе **GitHub**
+- [x] 2. Создать публичный репозиторий с названием **lab06** на сервисе **GitHub**
 - [x] 3. Ознакомиться со ссылками учебного материала
 - [x] 4. Включить интеграцию сервиса **Travis CI** с созданным репозиторием
 - [x] 5. Получить токен для **Travis CLI** с правами **repo** и **user**
@@ -27,10 +27,10 @@ $ export GITHUB_TOKEN=<полученный_токен>
 ```
 Создание директории новой лабы на основе предыдущей
 ```ShellSession
-$ git clone https://github.com/${GITHUB_USERNAME}/lab04 lab05
-$ cd lab05
+$ git clone https://github.com/${GITHUB_USERNAME}/lab04 lab06
+$ cd lab06
 $ git remote remove origin
-$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab05
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab06
 ```
 Редактирование travis.yml
 ```ShellSession
@@ -114,15 +114,15 @@ Description: ???
 Polly-99/lab04 (active: no, admin: yes, push: yes, pull: yes)
 Description: ???
 
-Polly-99/lab05 (active: yes, admin: yes, push: yes, pull: yes)
+Polly-99/lab06 (active: yes, admin: yes, push: yes, pull: yes)
 Description: ???
 
 $ travis enable #активация проекта
-Detected repository as Polly-99/lab05, is this correct? |yes| yes
-Polly-99/lab05: enabled :)
+Detected repository as Polly-99/lab06, is this correct? |yes| yes
+Polly-99/lab06: enabled :)
 
 $ travis whatsup  #вывод последних действий с файлами
-Polly-99/lab05 passed: #1
+Polly-99/lab06 passed: #1
 
 $ travis branches #вывод веток
 master:  #1    passed   added CI
@@ -135,7 +135,7 @@ Job #1.1:   added CI
 State:         passed
 Type:          push
 Branch:        master
-Compare URL:   https://github.com/Polly-99/lab05/compare/5f092b62ae7b^...830a918fce22
+Compare URL:   https://github.com/Polly-99/lab06/compare/5f092b62ae7b^...830a918fce22
 Duration:      31 sec
 Started:       2017-10-07 21:51:44
 Finished:      2017-10-07 21:52:15
