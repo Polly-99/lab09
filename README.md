@@ -80,6 +80,15 @@ EOF
 $ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=ON
 $ cmake --build _build
 $ cmake --build _build --target test
+Running tests...
+Test project /home/polina/lab06/_build
+    Start 1: check
+1/1 Test #1: check ............................  Passed   0.04 sec.
+
+100% tests passed, 0 tests faild out of 1
+
+Totel Test time (real) =  0.05 sec
+
 ```
 
 Изменение файлов
