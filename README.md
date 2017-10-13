@@ -87,7 +87,7 @@ Test project /home/polina/lab06/_build
 
 100% tests passed, 0 tests faild out of 1
 
-Totel Test time (real) =  0.05 sec
+Total Test time (real) =  0.05 sec
 
 ```
 
