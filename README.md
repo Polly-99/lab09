@@ -79,7 +79,7 @@ EOF
 ```ShellSession
 $ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=ON
 $ cmake --build _build
-$ cmake --build _build --target test
+$ cmake --build _build --target test #запуск теста после сборки
 Running tests...
 Test project /home/polina/lab06/_build
     Start 1: check
