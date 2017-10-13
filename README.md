@@ -19,16 +19,16 @@ $ open https://github.com/philsquared/Catch
 $ export GITHUB_USERNAME=Polly-99
 ```
 
-```ShellSession
 Создание директории новой лабы на основе предыдущей
+```ShellSession
 $ git clone https://github.com/${GITHUB_USERNAME}/lab05 lab06
 $ cd lab06
 $ git remote remove origin
 $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab06
 ```
 
-```ShellSession
 Создание тестов
+```ShellSession
 $ mkdir tests #создание директории tests
 $ wget https://github.com/philsquared/Catch/releases/download/v1.9.3/catch.hpp -O tests/catch.hpp # #получение catch.hpp с сайта, записывание его в директорию tests
 $ cat > tests/main.cpp <<EOF # создание и редактирование файла main.cpp
@@ -37,8 +37,8 @@ $ cat > tests/main.cpp <<EOF # создание и редактирование 
 EOF
 ```
 
-```ShellSession
 Создание CMakeLists.txt
+```ShellSession
 $ sed -i '/option(BUILD_EXAMPLES "Build examples" OFF)/a\ #дописываем строку в потоковом текстовом редакторе
 option(BUILD_TESTS "Build tests" OFF)
 ' CMakeLists.txt
@@ -53,8 +53,8 @@ endif()
 EOF
 ```
 
-```ShellSession
 Создание тестов
+```ShellSession
 $ cat >> tests/test1.cpp <<EOF
 #include "catch.hpp"
 #include <print.hpp>
@@ -75,15 +75,15 @@ TEST_CASE("output values should match input values", "[file]") {
 EOF
 ```
 
-```ShellSession
 Сборка файлов
+```ShellSession
 $ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=ON
 $ cmake --build _build
 $ cmake --build _build --target test
 ```
 
-```ShellSession
 Изменение файлов
+```ShellSession
 $ sed -i 's/lab05/lab06/g' README.md # замена "lab05" на "lab06"
 $ sed -i 's/\(DCMAKE_INSTALL_PREFIX=_install\)/\1 -DBUILD_TESTS=ON/' .travis.yml # дописывание строки
 $ sed -i '/cmake --build _build --target install/a\ #добавление строки
@@ -91,26 +91,26 @@ $ sed -i '/cmake --build _build --target install/a\ #добавление стр
 ' .travis.yml
 ```
 
-```ShellSession
 Проверка работоспособности .travis.yml
+```ShellSession
 $ travis lint
 ```
 
-```ShellSession
 Коммит изменений
+```ShellSession
 $ git add .
 $ git commit -m"added tests"
 $ git push origin master
 ```
 
-```ShellSession
 Вход в travis, активация проекта
+```ShellSession
 $ travis login --auto
 $ travis enable
 ```
 
+Screenshot
 ```ShellSession
-#Screenshot
 $ mkdir artifacts
 $ screencapture -T 20 artifacts/screenshot.jpg
 <Command>-T
