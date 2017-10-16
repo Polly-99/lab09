@@ -44,16 +44,16 @@ option(BUILD_TESTS "Build tests" OFF)
 ' CMakeLists.txt
 $ cat >> CMakeLists.txt <<EOF # редактирование файла CMakeLists.txt
 if(BUILD_TESTS)
-	enable_testing()
+	enable_testing() # включение тестирования
 	file(GLOB \${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
 	add_executable(check \${\${PROJECT_NAME}_TEST_SOURCES})
 	target_link_libraries(check \${PROJECT_NAME} \${DEPENDS_LIBRARIES})
-	add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes") 
+	add_test(NAME check COMMAND check "-s" "-r" "compact" "--use-colour" "yes")  # Добавление теста к проекту; -s - вывод успешного выполнения тестов ; -r compact - формат вывода
 endif()
 EOF
 ```
 
-Создание тестов
+Создание теста
 ```ShellSession
 $ cat >> tests/test1.cpp <<EOF
 #include "catch.hpp"
@@ -75,7 +75,7 @@ TEST_CASE("output values should match input values", "[file]") {
 EOF
 ```
 
-Сборка файлов
+Сборка и запуск тестов
 ```ShellSession
 $ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -DBUILD_TESTS=ON
 $ cmake --build _build
@@ -91,11 +91,11 @@ Total Test time (real) =  0.05 sec
 
 ```
 
-Изменение файлов
+Редактирование файлов
 ```ShellSession
 $ sed -i 's/lab05/lab06/g' README.md # замена "lab05" на "lab06"
-$ sed -i 's/\(DCMAKE_INSTALL_PREFIX=_install\)/\1 -DBUILD_TESTS=ON/' .travis.yml # дописывание строки
-$ sed -i '/cmake --build _build --target install/a\ #добавление строки после данной
+$ sed -i 's/\(DCMAKE_INSTALL_PREFIX=_install\)/\1 -DBUILD_TESTS=ON/' .travis.yml # дописывание строки 
+$ sed -i '/cmake --build _build --target install/a\ #добавление строки - cmake --build _build --target test после cmake --build _build --target install
 - cmake --build _build --target test
 ' .travis.yml
 ```
