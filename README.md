@@ -1,183 +1,110 @@
-## Laboratory work VIII
+## Laboratory work IX
 
-Данная лабораторная работа посвещена изучению средств пакетирования на примере **CPack**
+Данная лабораторная работа посвещена изучению процесса создания пакета на примере **Github Release**
 
 ```ShellSession
-$ open https://cmake.org/Wiki/CMake:CPackPackageGenerators
+$ open https://help.github.com/articles/creating-releases/
 ```
 
 ## Tasks
 
-- [x] 1. Создать публичный репозиторий с названием **lab08** на сервисе **GitHub**
-- [x] 2. Выполнить инструкцию учебного материала
-- [x] 3. Ознакомиться со ссылками учебного материала
-- [x] 4. Составить отчет и отправить ссылку личным сообщением в **Slack**
+- [x] 1. Создать публичный репозиторий с названием **lab09** на сервисе **GitHub**
+- [x] 2. Ознакомиться со ссылками учебного материала
+- [x] 3. Получить токен для доступа к репозиториям сервиса **GitHub**
+- [x] 4. Сгенерировать GPG ключ и добавить его к аккаунту сервиса **GitHub**
+- [x] 5. Выполнить инструкцию учебного материала
+- [x] 6. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
 
 ```ShellSession
-$ export GITHUB_USERNAME=Polly-99
-$ export GITHUB_EMAIL=prasnach@mail.ru
-$ alias edit=vi
+$ export GITHUB_TOKEN=<полученный_токен>
+$ export GITHUB_USERNAME=<имя_пользователя>
 $ alias gsed=sed # for *-nix system
 ```
-
+Установка github-release
+```ShellSession
+$ cd ${GITHUB_USERNAME}/workspace
+$ pushd .
+$ source scripts/activate
+$ go get github.com/aktau/github-release
+```
 Создание директории новой лабы на основе предыдущей
 ```ShellSession
-$ git clone https://github.com/${GITHUB_USERNAME}/lab07 lab08
-$ cd lab08
+$ git clone https://github.com/${GITHUB_USERNAME}/lab08 projects/lab09
+$ cd projects/lab09
 $ git remote remove origin
-$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab08
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab09
 ```
-
-Редактирование CMakeLists.txt, установка версий MAJOR, TWEAK, PATCH, MINOR
-```ShellSession
-$ gsed -i '/project(print)/a\
-set(PRINT_VERSION_STRING "v${PRINT_VERSION}")
-' CMakeLists.txt
-$ gsed -i '/project(print)/a\
-set(PRINT_VERSION \
-\${PRINT_VERSION_MAJOR}.\${PRINT_VERSION_MINOR}.\${PRINT_VERSION_PATCH}.\${PRINT_VERSION_TWEAK})
-' CMakeLists.txt
-$ gsed -i '/project(print)/a\
-set(PRINT_VERSION_TWEAK 0)
-' CMakeLists.txt
-$ gsed -i '/project(print)/a\
-set(PRINT_VERSION_PATCH 0)
-' CMakeLists.txt
-$ gsed -i '/project(print)/a\ 
-set(PRINT_VERSION_MINOR 1)
-' CMakeLists.txt
-$ gsed -i '/project(print)/a\ 
-set(PRINT_VERSION_MAJOR 0)
-' CMakeLists.txt
-```
-
-Работа с файлами DESCRIPTION и ChangeLog.md
-```ShellSession
-$ touch DESCRIPTION && edit DESCRIPTION #создание пустого файла и его редактирование
-$ touch ChangeLog.md #создание пустого файла
-$ DATE=`date +"%a %b %d %Y"` cat > ChangeLog.md <<EOF #добавление дату, имя пользователя, электронную почту и версию
-* ${DATE} ${GITHUB_USERNAME} <${GITHUB_EMAIL}> 0.1.0.0
-- Initial RPM release
-EOF
-```
-
- Редактирование  CPackConfig.cmake
- Подключение  требуемых библиотек
-```ShellSession
-$ cat > CPackConfig.cmake <<EOF
-include(InstallRequiredSystemLibraries) 
-EOF
-```
-  Установка значений переменных
-```ShellSession
-$ cat >> CPackConfig.cmake <<EOF
-set(CPACK_PACKAGE_CONTACT ${GITHUB_EMAIL})
-set(CPACK_PACKAGE_VERSION_MAJOR \${PRINT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR \${PRINT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH \${PRINT_VERSION_PATCH})
-set(CPACK_PACKAGE_VERSION_TWEAK \${PRINT_VERSION_TWEAK})
-set(CPACK_PACKAGE_VERSION \${PRINT_VERSION})
-set(CPACK_PACKAGE_DESCRIPTION_FILE \${CMAKE_CURRENT_SOURCE_DIR}/DESCRIPTION)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "static c++ library for printing")
-EOF
-```
-
-Установка пути к файлам LICENSE и README.md
-```ShellSession
-$ cat >> CPackConfig.cmake <<EOF
-
-set(CPACK_RESOURCE_FILE_LICENSE \${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
-set(CPACK_RESOURCE_FILE_README \${CMAKE_CURRENT_SOURCE_DIR}/README.md)
-EOF
-```
-
- Установка значений 
-```ShellSession
-$ cat >> CPackConfig.cmake <<EOF
-
-set(CPACK_RPM_PACKAGE_NAME "print-devel")
-set(CPACK_RPM_PACKAGE_LICENSE "MIT")
-set(CPACK_RPM_PACKAGE_GROUP "print")
-set(CPACK_RPM_PACKAGE_URL "https://github.com/${GITHUB_USERNAME}/lab07")
-set(CPACK_RPM_CHANGELOG_FILE \${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog.md)
-set(CPACK_RPM_PACKAGE_RELEASE 1)
-EOF
-```
-
-```ShellSession
-$ cat >> CPackConfig.cmake <<EOF
-
-set(CPACK_DEBIAN_PACKAGE_NAME "libprint-dev")
-set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://${GITHUB_USERNAME}.github.io/lab07")
-set(CPACK_DEBIAN_PACKAGE_PREDEPENDS "cmake >= 3.0")
-set(CPACK_DEBIAN_PACKAGE_RELEASE 1)
-EOF
-```
-
-Подключение CPack
-```ShellSession
-$ cat >> CPackConfig.cmake <<EOF
-
-include(CPack)
-EOF
-```
-Подключение CPackConfig.cmake
-```ShellSession
-$ cat >> CMakeLists.txt <<EOF
-
-include(CPackConfig.cmake)
-EOF
-```
-
 Замена "lab07" на "lab08" в файле README.md
 ```ShellSession
-$ gsed -i 's/lab07/lab08/g' README.md
+$ gsed -i 's/lab08/lab09/g' README.md
 ```
-
-Совершение коммита
-```ShellSession
-$ git add .
-$ git commit -m"added cpack config"
-$ git push origin master
-```
-
- Активация проекта в travis
-```ShellSession
-$ travis login --auto
-$ travis enable
-```
-Сборка
-```ShellSession
-$ cmake -H. -B_build
-$ cmake --build _build
-$ cd _build
-$ cpack -G "TGZ"
-$ cpack -G "DEB"
-$ cd ..
-```
-
 Архивация
 ```ShellSession
 $ cmake -H. -B_build -DCPACK_GENERATOR="TGZ"
 $ cmake --build _build --target package
 ```
-
-Работа с директорией artifacts
+Активация проекта в travis
 ```ShellSession
-$ mkdir artifacts #создание директории artifacts
-$ mv _build/*.tar.gz artifacts #перемещение всех файлов с расширением .tar.gz из _build в artifacts
-$ tree artifacts #вывод содержимого директории
-artifacts
-└── print-0.1.0.0-Linux.tar.gz
+$ travis login --auto
+$ travis enable
 ```
+Создание метки
+```ShellSession
+$ git tag -s v0.1.0.0 # создание метки
+$ git tag -v v0.1.0.0 # проверка метки
+$ git push origin master --tags 
+```
+Добавление релиза
+```ShellSession
+$ github-release --version # вывод версии 
+github-release v0.7.2
+$ github-release info -u ${GITHUB_USERNAME} -r lab09 #информация о релизах
+tags:
+- v0.1.0.0 (commit: https://api.github.com/repos/Polly-99/lab09/commits/12371e9d07e5d569b3223d77b8b71e90a79c1496)
+releases:
+$ github-release release \  #создание нового релиза
+    --user ${GITHUB_USERNAME} \
+    --repo lab09 \
+    --tag v0.1.0.0 \
+    --name "libprint" \
+    --description "my first release"
+```
+Загрузка релиза
+```ShellSession
+$ export PACKAGE_OS=`uname -s` PACKAGE_ARCH=`uname -m` #переменная окружения - операционная система
+$ export PACKAGE_FILENAME=print-${PACKAGE_OS}-${PACKAGE_ARCH}.tar.gz #переменная окружения - имя пакета
+$ github-release upload \ #загрузка релиза
+    --user ${GITHUB_USERNAME} \
+    --repo lab09 \
+    --tag v0.1.0.0 \
+    --name "${PACKAGE_FILENAME}" \
+    --file _build/*.tar.gz
+```
+
+```ShellSession
+$ github-release info -u ${GITHUB_USERNAME} -r lab09 #информация о релизах
+tags:
+- v0.1.0.0 (commit: https://api.github.com/repos/Polly-99/lab09/commits/12371e9d07e5d569b3223d77b8b71e90a79c1496)
+releases:
+- v0.1.0.0, name: 'libprint', description: 'my first release', id: 8346712, tagged: 01/11/2017 at 17:58, published: 01/11/2017 at 18:00, draft: ✗, prerelease: ✗
+  - artifact: print-Linux-x86_64.tar.gz, downloads: 0, state: uploaded, type: application/octet-stream, size: 2.8 kB, id: 5222058
+$ wget https://github.com/${GITHUB_USERNAME}/lab09/releases/download/v0.1.0.0/${PACKAGE_FILENAME}
+$ tar -ztf ${PACKAGE_FILENAME}
+```print-0.1.0.0-Linux/cmake/
+print-0.1.0.0-Linux/cmake/print-config-noconfig.cmake
+print-0.1.0.0-Linux/cmake/print-config.cmake
+print-0.1.0.0-Linux/lib/
+print-0.1.0.0-Linux/lib/libprint.a
+print-0.1.0.0-Linux/include/
+print-0.1.0.0-Linux/include/print.hpp
 
 ## Report
 Создание отчета
 ```ShellSession
-$ cd ~/workspace/labs/
-$ export LAB_NUMBER=08
+$ popd
+$ export LAB_NUMBER=09
 $ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
 $ mkdir reports/lab${LAB_NUMBER}
 $ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
