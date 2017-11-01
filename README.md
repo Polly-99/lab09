@@ -92,14 +92,14 @@ releases:
   - artifact: print-Linux-x86_64.tar.gz, downloads: 0, state: uploaded, type: application/octet-stream, size: 2.8 kB, id: 5222058
 $ wget https://github.com/${GITHUB_USERNAME}/lab09/releases/download/v0.1.0.0/${PACKAGE_FILENAME}
 $ tar -ztf ${PACKAGE_FILENAME}
-```print-0.1.0.0-Linux/cmake/
+print-0.1.0.0-Linux/cmake/
 print-0.1.0.0-Linux/cmake/print-config-noconfig.cmake
 print-0.1.0.0-Linux/cmake/print-config.cmake
 print-0.1.0.0-Linux/lib/
 print-0.1.0.0-Linux/lib/libprint.a
 print-0.1.0.0-Linux/include/
 print-0.1.0.0-Linux/include/print.hpp
-
+```
 ## Report
 Создание отчета
 ```ShellSession
